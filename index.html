@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trick or Treat?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <!-- このページは第三者に見せる用。設定は config.json を編集してください。 -->
+    <div class="sky"></div>
+    <div class="scene">
+      <div class="topImage">
+        <img id="heroImage" alt="ハロウィン宝探し トップ画像" />
+      </div>
+      <header class="hero">
+        <h1 class="title">Trick or Treat? 🎃</h1>
+        <p class="subtitle">ひみつの合言葉を入れてね</p>
+      </header>
+
+      <main class="card" role="main">
+        <form id="gateForm" class="form" autocomplete="off">
+          <label for="password" class="label">パスワード</label>
+          <div class="inputRow">
+            <input
+              id="password"
+              name="password"
+              type="password"
+              inputmode="text"
+              class="input"
+              placeholder="trick or treat..."
+              aria-label="パスワード"
+              required
+            />
+            <button type="button" id="togglePw" class="ghostBtn" aria-label="表示/非表示">
+              👀
+            </button>
+          </div>
+          <button type="submit" class="btn" id="submitBtn">入る</button>
+          <p id="message" class="message" aria-live="polite"></p>
+        </form>
+      </main>
+    </div>
+
+    <!-- かわいい飾り -->
+    <div class="pumpkin pumpkin--left">🎃</div>
+    <div class="pumpkin pumpkin--right">🎃</div>
+    <div class="bat bat--1">🦇</div>
+    <div class="bat bat--2">🦇</div>
+    <div class="bat bat--3">🦇</div>
+
+    <script src="./script.js" defer></script>
+  </body>
+  </html>
+
+
