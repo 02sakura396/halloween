@@ -1,5 +1,5 @@
 (() => {
-  let config = { targetUrl: 'https://www.yahoo.co.jp/', password: 'halloween', heroImage: 'hero.jpg' };
+  let config = { password: 'sakura251023', heroImage: 'hero.jpg' };
   const form = document.getElementById('gateForm');
   const pw = document.getElementById('password');
   const msg = document.getElementById('message');
@@ -53,13 +53,13 @@
         const successScreen = document.getElementById('successScreen');
         if (successScreen) {
           successScreen.classList.add('active');
-          // 鍵が開くアニメーション
+          // 南京錠が開くアニメーション（少し遅らせて目立たせる）
           setTimeout(() => {
             const lockAnim = document.querySelector('.lock-animation');
             if (lockAnim) lockAnim.classList.add('unlocking');
-          }, 300);
+          }, 500);
         }
-      }, 500);
+      }, 400);
     } else {
       msg.textContent = 'ちがうみたい…もう一回試してね';
       msg.classList.add('error');

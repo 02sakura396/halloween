@@ -179,7 +179,8 @@ body {
 .success-screen {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.95);
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -188,6 +189,7 @@ body {
   pointer-events: none;
   transition: opacity 0.5s ease-in-out;
   overflow-y: auto;
+  padding: 20px;
 }
 
 .success-screen.active {
@@ -195,38 +197,57 @@ body {
   pointer-events: auto;
 }
 
-/* 鍵のアニメーション */
+/* 鍵のアニメーション（南京錠） */
 .lock-animation {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10001;
+  filter: drop-shadow(0 10px 30px rgba(255, 215, 0, 0.8));
 }
 
 .lock-animation .lock,
 .lock-animation .unlock {
-  font-size: 80px;
+  font-size: 100px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  transition: all 0.6s ease;
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.lock-animation .lock {
+  animation: lockShake 0.6s ease-in-out;
+}
+
+@keyframes lockShake {
+  0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+  25% { transform: translate(-50%, -50%) rotate(-15deg); }
+  75% { transform: translate(-50%, -50%) rotate(15deg); }
 }
 
 .lock-animation .unlock {
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0.5);
+  transform: translate(-50%, -50%) scale(0.3) rotate(-90deg);
 }
 
 .lock-animation.unlocking .lock {
   opacity: 0;
-  transform: translate(-50%, -50%) scale(1.5) rotate(180deg);
+  transform: translate(-50%, -50%) scale(0) rotate(360deg);
+  filter: blur(10px);
 }
 
 .lock-animation.unlocking .unlock {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(1.3) rotate(0deg);
+  animation: unlockBounce 0.6s ease-out 0.3s;
+}
+
+@keyframes unlockBounce {
+  0% { transform: translate(-50%, -50%) scale(1.3); }
+  50% { transform: translate(-50%, -50%) scale(1.5); }
+  100% { transform: translate(-50%, -50%) scale(1); }
 }
 
 /* 白く輝くエフェクト */
@@ -265,66 +286,81 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 24px;
   padding: 40px 20px;
-  max-width: 90vw;
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
   opacity: 0;
-  animation: fadeInUp 0.8s ease-out 1.2s forwards;
+  animation: fadeInUp 1s ease-out 1.5s forwards;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 24px;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(50px) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
 .secret-image {
-  max-width: min(500px, 85vw);
-  max-height: 70vh;
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7),
-              0 0 40px rgba(255, 255, 255, 0.3);
+  width: 100%;
+  max-width: 100%;
+  max-height: 50vh;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8),
+              0 0 30px rgba(255, 255, 255, 0.2),
+              0 0 60px rgba(255, 215, 0, 0.3);
   object-fit: contain;
-  animation: imageReveal 0.8s ease-out 1.4s backwards;
+  animation: imageReveal 1s ease-out 1.7s backwards;
 }
 
 @keyframes imageReveal {
   from {
     opacity: 0;
-    transform: scale(0.9);
-    filter: brightness(3);
+    transform: scale(0.85);
+    filter: brightness(2.5) blur(5px);
+  }
+  50% {
+    filter: brightness(1.5) blur(0px);
   }
   to {
     opacity: 1;
     transform: scale(1);
-    filter: brightness(1);
+    filter: brightness(1) blur(0px);
   }
 }
 
 .success-message {
   text-align: center;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, rgba(255, 140, 58, 0.15), rgba(155, 93, 229, 0.15));
+  backdrop-filter: blur(15px);
   border-radius: 20px;
-  padding: 24px 32px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-  animation: messageReveal 0.8s ease-out 1.6s backwards;
+  padding: 28px 32px;
+  border: 2px solid rgba(255, 215, 0, 0.4);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6),
+              0 0 20px rgba(255, 215, 0, 0.2);
+  animation: messageReveal 1s ease-out 2s backwards;
+  width: 100%;
 }
 
 @keyframes messageReveal {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px) scale(0.9);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -351,19 +387,103 @@ body {
   line-height: 1.6;
 }
 
+/* スマホ調整 */
+@media (max-width: 768px) {
+  .success-screen {
+    padding: 16px;
+  }
+  
+  .success-content {
+    padding: 24px 16px;
+    gap: 20px;
+    max-width: 95vw;
+    border-radius: 20px;
+  }
+  
+  .lock-animation .lock,
+  .lock-animation .unlock {
+    font-size: 80px;
+  }
+  
+  .secret-image {
+    max-height: 45vh;
+    border-radius: 12px;
+  }
+  
+  .success-message {
+    padding: 20px 20px;
+  }
+  
+  .success-message h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  
+  .success-message .reveal-text {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  .success-message .dm-request {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+}
+
 /* 小画面調整 */
+@media (max-width: 480px) {
+  .success-content {
+    padding: 20px 12px;
+    gap: 16px;
+  }
+  
+  .lock-animation .lock,
+  .lock-animation .unlock {
+    font-size: 70px;
+  }
+  
+  .secret-image {
+    max-height: 40vh;
+    border-radius: 12px;
+  }
+  
+  .success-message {
+    padding: 18px 16px;
+  }
+  
+  .success-message h2 {
+    font-size: 20px;
+  }
+  
+  .success-message .reveal-text {
+    font-size: 15px;
+  }
+  
+  .success-message .dm-request {
+    font-size: 12px;
+  }
+}
+
 @media (max-width: 360px) {
   .inputRow { grid-template-columns: 1fr 44px; }
   .ghostBtn { min-width: 44px; height: 44px; }
   .btn { height: 44px; }
+  
+  .success-content {
+    padding: 16px 10px;
+  }
   
   .lock-animation .lock,
   .lock-animation .unlock {
     font-size: 60px;
   }
   
+  .secret-image {
+    max-height: 35vh;
+  }
+  
   .success-message {
-    padding: 20px 24px;
+    padding: 16px 14px;
   }
 }
 
