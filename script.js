@@ -49,7 +49,16 @@
       msg.textContent = 'ようこそ！お菓子あげるね🍬';
       msg.classList.add('success');
       setTimeout(() => {
-        window.location.href = String(config.targetUrl || 'https://www.yahoo.co.jp/');
+        // 成功画面を表示
+        const successScreen = document.getElementById('successScreen');
+        if (successScreen) {
+          successScreen.classList.add('active');
+          // 鍵が開くアニメーション
+          setTimeout(() => {
+            const lockAnim = document.querySelector('.lock-animation');
+            if (lockAnim) lockAnim.classList.add('unlocking');
+          }, 300);
+        }
       }, 500);
     } else {
       msg.textContent = 'ちがうみたい…もう一回試してね';
